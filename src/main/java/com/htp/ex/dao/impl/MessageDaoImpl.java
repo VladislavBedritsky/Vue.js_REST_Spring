@@ -47,7 +47,7 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public Message findLastMessageInTable () {
-        String sql = "SELECT FROM messages order by id desc limit 1";
+        String sql = "SELECT * FROM messages ORDER BY id DESC LIMIT 1";
         return jdbcTemplate.queryForObject(sql, new MessageMapper());
     }
 }
