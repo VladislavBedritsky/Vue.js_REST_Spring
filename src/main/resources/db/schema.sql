@@ -1,0 +1,9 @@
+use vue;
+
+DROP TABLE IF EXISTS messages;
+
+CREATE TABLE IF NOT EXISTS messages (
+  id INT NOT NULL AUTO_INCREMENT,
+  text VARCHAR(255),
+  PRIMARY KEY (id)
+);
