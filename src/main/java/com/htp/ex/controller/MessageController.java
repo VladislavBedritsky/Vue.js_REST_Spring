@@ -1,11 +1,14 @@
 package com.htp.ex.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.htp.ex.model.Message;
+import com.htp.ex.rest.Views;
 import com.htp.ex.service.ServiceProvider;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -16,11 +19,13 @@ public class MessageController {
     private ServiceProvider serviceProvider;
 
     @GetMapping
+    @JsonView(Views.IdAndName.class)
     public List<Message> findAll () {
         return serviceProvider.getMessageService().findAll();
     }
 
     @GetMapping("/{id}")
+    @JsonView(Views.IdAndLocalDate.class)
     public Message getOne(@PathVariable Integer id) {
         return serviceProvider.getMessageService().findMessageById(id);
     }
@@ -28,21 +33,19 @@ public class MessageController {
     @PostMapping
     public Message create (@RequestBody Message message) {
 
+        message.setLocalDateTime(LocalDateTime.now());
         serviceProvider.getMessageService().save(message);
 
-        System.out.println(serviceProvider.getMessageService().findLastMessageInTable());
         return serviceProvider.getMessageService().findLastMessageInTable();
     }
 
     @PutMapping("/{id}")
     public Message update (
-            @PathVariable("id") Message messageFromDB,
+            @PathVariable("id") Integer id,
             @RequestBody Message message) {
 
-        BeanUtils.copyProperties(message,messageFromDB, "id");
-        serviceProvider.getMessageService().update(messageFromDB);
-        System.out.println(message);
-        System.out.println(messageFromDB);
+        serviceProvider.getMessageService().update(message);
+
         return message;
     }
 

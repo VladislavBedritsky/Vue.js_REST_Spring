@@ -35,8 +35,8 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public void save(Message message) {
-        String sql = "INSERT INTO messages (id, text) VALUES (?, ?)";
-        jdbcTemplate.update(sql, message.getId(), message.getText());
+        String sql = "INSERT INTO messages (id, text, date_time) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, message.getId(), message.getText(), message.getLocalDateTime());
     }
 
     @Override

@@ -14,6 +14,7 @@ public class MessageMapper implements RowMapper<Message> {
 
         message.setId(resultSet.getInt("id"));
         message.setText(resultSet.getString("text"));
+        message.setLocalDateTime(resultSet.getTimestamp("date_time").toLocalDateTime());
 
         return message;
     }

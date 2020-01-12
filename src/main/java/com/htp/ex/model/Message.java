@@ -1,11 +1,22 @@
 package com.htp.ex.model;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.htp.ex.rest.Views;
+
+import java.time.LocalDateTime;
 
 public class Message {
 
+    @JsonView(Views.Id.class)
     private Integer id;
+
+    @JsonView(Views.IdAndName.class)
     private String text;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonView(Views.IdAndLocalDate.class)
+    private LocalDateTime localDateTime;
 
     public Integer getId() {
         return id;
@@ -23,25 +34,12 @@ public class Message {
         this.text = text;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Message message = (Message) o;
-        return Objects.equals(id, message.id) &&
-                Objects.equals(text, message.text);
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, text);
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                '}';
-    }
 }

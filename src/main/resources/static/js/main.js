@@ -8,13 +8,8 @@ function getIndex (list, id) {
     return -1;
 }
 
-function getLastIndex (list) {
-    for (var i = 0; i < list.length; i++) {
-        if (i === (list.length - 1)) {
-            return list[i].id;
-        }
-    }
-    return -1;
+function lastIndexId(list) {
+  return list[list.length - 1];
 }
 
 var messageApi = Vue.resource('/message{/id}');
@@ -41,27 +36,22 @@ Vue.component('message-form', {
         '</div>',
     methods: {
         save: function () {
-            var message = { text: this.text };
-            var ind = { id: '4' };
+            var message = {id: this.id, text: this.text };
 
             if (this.text != 0) {
-            if (this.id) {
-                messageApi.update( {id: this.id}, message).then(result =>
-                result.json().then(data => {
-                    var index = getIndex(this.messages, data.id);
-                    this.messages.splice(index, 1, data);
-                    console.log(this.id);
-                    this.text="";
-                    this.id="";
+                if (this.id <= lastIndexId(this.messages).id && this.id > 0) {
+                    messageApi.update( {id: this.id}, message).then(result =>
+                    result.json().then(data => {
+                         var index = getIndex(this.messages, data.id);
+                         this.messages.splice(index, 1, data);
+                         this.text="";
+                         this.id="";
                 }
                 ))
             } else {
                     messageApi.save({}, message).then(result =>
                     result.json().then(data => {
                         this.messages.push(data);
-
-                        this.id = ind.id;
-                        console.log(ind);
                         this.text="";
                 }))
                 }
@@ -99,7 +89,7 @@ Vue.component('messages-list', {
   data:
     function() {
         return {
-            m1: null //
+            m1: null
         }
     },
   template:
@@ -114,7 +104,7 @@ Vue.component('messages-list', {
   },
   methods: {
     editMethod: function(message) {
-        this.m1 = message; //
+        this.m1 = message;
     }
   }
 })
