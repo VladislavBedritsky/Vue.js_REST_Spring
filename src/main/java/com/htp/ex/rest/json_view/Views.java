@@ -1,4 +1,4 @@
-package com.htp.ex.rest;
+package com.htp.ex.rest.json_view;
 
 public final class Views {
 

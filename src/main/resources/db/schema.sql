@@ -1,4 +1,4 @@
-use vue;
+USE vue;
 
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS users;

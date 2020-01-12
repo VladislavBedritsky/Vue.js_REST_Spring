@@ -1,10 +1,9 @@
-package com.htp.ex.controller;
+package com.htp.ex.rest.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.htp.ex.model.Message;
-import com.htp.ex.rest.Views;
+import com.htp.ex.rest.json_view.Views;
 import com.htp.ex.service.ServiceProvider;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

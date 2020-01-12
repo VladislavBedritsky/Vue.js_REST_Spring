@@ -2,7 +2,7 @@ package com.htp.ex.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.htp.ex.rest.Views;
+import com.htp.ex.rest.json_view.Views;
 
 import java.time.LocalDateTime;
 

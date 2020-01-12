@@ -1,8 +1,12 @@
 package com.htp.ex.model;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class User {
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+public class User implements Serializable {
 
     private String id;
     private String name;
@@ -10,6 +14,8 @@ public class User {
     private String email;
     private String gender;
     private String locale;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastVisit;
 
     public String getId() {
@@ -66,5 +72,23 @@ public class User {
 
     public void setLastVisit(LocalDateTime lastVisit) {
         this.lastVisit = lastVisit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "user.id = "+id;
     }
 }

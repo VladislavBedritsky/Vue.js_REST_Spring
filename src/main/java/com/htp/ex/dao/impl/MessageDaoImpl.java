@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -29,14 +30,14 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public void update(Message message) {
-        String sql = "UPDATE messages SET text =? where id = ?";
-        jdbcTemplate.update(sql,message.getText(),message.getId());
+        String sql = "UPDATE messages SET text =?, date_time =? where id = ?";
+        jdbcTemplate.update(sql,message.getText(), LocalDateTime.now(), message.getId());
     }
 
     @Override
     public void save(Message message) {
         String sql = "INSERT INTO messages (id, text, date_time) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, message.getId(), message.getText(), message.getLocalDateTime());
+        jdbcTemplate.update(sql, message.getId(), message.getText(), LocalDateTime.now());
     }
 
     @Override
