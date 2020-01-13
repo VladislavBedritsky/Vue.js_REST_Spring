@@ -2,6 +2,8 @@ package com.htp.ex.config;
 
 import com.htp.ex.dao.DaoProvider;
 import com.htp.ex.model.User;
+import com.htp.ex.service.ServiceProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,10 @@ import java.time.LocalDateTime;
 @EnableWebSecurity
 @EnableOAuth2Sso
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private ServiceProvider serviceProvider;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -31,29 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PrincipalExtractor principalExtractor (DaoProvider daoProvider) {
-        return map -> {
-            String id = (String) map.get("sub");
-
-            User user = daoProvider.getUserDao().findById(id);
-
-            if (user != null) {
-                daoProvider.getUserDao().updateUserLastVisit(id);
-                return user;
-            } else {
-
-                User newUser = new User();
-                newUser.setId(id);
-                newUser.setName((String) map.get("name"));
-                newUser.setEmail((String) map.get("email"));
-                newUser.setGender((String) map.get("gender"));
-                newUser.setLocale((String) map.get("locale"));
-                newUser.setUserPic((String) map.get("picture"));
-                newUser.setLastVisit(LocalDateTime.now());
-                daoProvider.getUserDao().save(newUser);
-
-                return newUser;
-            }
-        };
+    public PrincipalExtractor principalExtractor () {
+        return serviceProvider.getUserService().returnUserFromDbOrCreateNewOne();
     }
 }

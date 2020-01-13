@@ -1,9 +1,9 @@
 package com.htp.ex.controller;
 
-import com.htp.ex.dao.DaoProvider;
 import com.htp.ex.model.User;
 import com.htp.ex.service.ServiceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +16,9 @@ import java.util.HashMap;
 @RequestMapping("/")
 public class MainController {
 
+    @Value("${spring.profiles.active}")
+    private String profile;
+
     @Autowired
     private ServiceProvider serviceProvider;
 
@@ -26,11 +29,11 @@ public class MainController {
     ) {
 
         HashMap<Object, Object> data = new HashMap<>();
-
         data.put("profile", user);
         data.put("messages", serviceProvider.getMessageService().findAll());
 
         model.addAttribute("data", data);
+        model.addAttribute("isDevMode", "dev".equals(profile));
 
         return "index";
     }

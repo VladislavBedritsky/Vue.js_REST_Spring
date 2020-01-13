@@ -1,4 +1,16 @@
+import Vue from 'vue'
+import App from 'pages/App.vue'
 
+
+new Vue({
+    el: '#app',
+    render: a => a(App)
+})
+
+
+
+
+/*
 function getIndex (list, id) {
     for (var i = 0; i < list.length; i++) {
         if (list[i].id === id) {
@@ -132,4 +144,4 @@ var app2 = new Vue({
   data: {
     message: 'Вы загрузили эту страницу: ' + new Date().toLocaleString()
   }
-})
+})*/

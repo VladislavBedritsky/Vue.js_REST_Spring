@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Sarafan</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
     <script th:inline="javascript">
         var frontendData = [[ ${data} ]];
     </script>
@@ -15,14 +13,14 @@
 
 <div id="app"></div>
 
-<div id="app-2">
-  <span v-bind:title="message">
-    Наведи на меня курсор на пару секунд,
-    чтобы увидеть динамически связанное значение title!
-  </span>
-</div>
+<!--<div id="app-2">-->
+<!--  <span v-bind:title="message">-->
+<!--    Наведи на меня курсор на пару секунд,-->
+<!--    чтобы увидеть динамически связанное значение title!-->
+<!--  </span>-->
+<!--</div>-->
 
 
-<script src="/js/main.js"></script>
+<script th:src="${isDevMode} ? 'http://localhost:80/main.js' : '/js/main.js'"></script>
 </body>
 </html>
