@@ -31,3 +31,7 @@ out/
 *.iws
 
 
+## JS
+
+node_modules
+yarn.lock
