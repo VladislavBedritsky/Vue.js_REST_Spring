@@ -11,8 +11,8 @@
 </template>
 
 <script>
-    import MessageRow from 'components/messages/MessageRow.vue'
-    import MessageForm from 'components/messages/MessageForm.vue'
+    import MessageRow from 'components/components_App/messages/MessageRow.vue'
+    import MessageForm from 'components/components_App/messages/MessageForm.vue'
 
     export default {
         props: ['mes'],

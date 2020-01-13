@@ -18,8 +18,8 @@
 </template>
 
 <script>
-    import MessagesList from 'components/messages/MessageList.vue'
-    import SomeQ from 'components/messages/Some.vue'
+    import MessagesList from 'components/components_App/messages/MessageList.vue'
+    import SomeQ from 'components/components_App/some/Some.vue'
 
     export default {
           components: {
