@@ -29,8 +29,11 @@ public class MainController {
     ) {
 
         HashMap<Object, Object> data = new HashMap<>();
-        data.put("profile", user);
-        data.put("messages", serviceProvider.getMessageService().findAll());
+
+        if (user != null) {
+            data.put("profile", user);
+            data.put("messages", serviceProvider.getMessageService().findAll());
+        }
 
         model.addAttribute("data", data);
         model.addAttribute("isDevMode", "dev".equals(profile));

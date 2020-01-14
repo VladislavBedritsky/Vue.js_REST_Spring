@@ -11,3 +11,9 @@ yarn add -D webpack webpack-cli webpack-dev-server babel-loader @babel/core @bab
 
 ### websocket dependency
 yarn add sockjs-client @stomp/stompjs
+
+### devDependencies vue-style, css
+yarn add -D vue-style-loader css-loader
+
+### vuetify dependency
+yarn add vuetify
