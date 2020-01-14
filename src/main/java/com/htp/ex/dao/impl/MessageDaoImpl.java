@@ -2,8 +2,10 @@ package com.htp.ex.dao.impl;
 
 import com.htp.ex.dao.MessageDao;
 import com.htp.ex.mapper.MessageMapper;
+import com.htp.ex.mapper.UserMapper;
 import com.htp.ex.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +27,11 @@ public class MessageDaoImpl implements MessageDao {
     @Override
     public Message findMessageById(Integer id) {
         String sql = "SELECT * FROM messages where id=?";
-        return jdbcTemplate.queryForObject(sql, new MessageMapper(), id);
+        try {
+            return jdbcTemplate.queryForObject(sql, new MessageMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override

@@ -6,7 +6,12 @@
 </template>
 
 <script>
+    import { sendMessage } from 'util/websocket'
 
+/*
+id="before I integrated websocket"
+*/
+/*
     function getIndex (list, id) {
         for (var i = 0; i < list.length; i++) {
             if (list[i].id === id) {
@@ -19,6 +24,7 @@
     function lastIndexId(list) {
         return list[list.length - 1];
     }
+    */
 
     export default {
         props: ['messages', 'messageAttr'],
@@ -37,7 +43,15 @@
         },
         methods: {
           save: function () {
-            const message = {id: this.id, text: this.text };
+                sendMessage({id: this.id, text: this.text});
+                this.text="";
+                this.id="";
+
+
+/*
+id="before I integrated websocket"
+*/
+/*            const message = {id: this.id, text: this.text };
 
             if (this.text != 0) {
                 if (this.id <= lastIndexId(this.messages).id && this.id > 0) {
@@ -56,9 +70,15 @@
                             this.text="";
                         }))
             }
-          }
+         }
+            */
+
+
+
+
+
         }
-    }
+     }
     }
 </script>
 

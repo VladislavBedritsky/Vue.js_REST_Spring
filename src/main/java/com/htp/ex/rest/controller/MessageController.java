@@ -5,6 +5,9 @@ import com.htp.ex.model.Message;
 import com.htp.ex.rest.json_view.Views;
 import com.htp.ex.service.ServiceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -32,7 +35,6 @@ public class MessageController {
     @PostMapping
     public Message create (@RequestBody Message message) {
 
-        message.setLocalDateTime(LocalDateTime.now());
         serviceProvider.getMessageService().save(message);
 
         return serviceProvider.getMessageService().findLastMessageInTable();
@@ -51,5 +53,20 @@ public class MessageController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         serviceProvider.getMessageService().delete(id);
+    }
+
+    @MessageMapping("/changeMessage")
+    @SendTo("/topic/activity")
+    public Message change(Message message) {
+
+        Message m = serviceProvider.getMessageService().findMessageById(message.getId());
+
+        if (m != null) {
+            serviceProvider.getMessageService().update(message);
+            return message;
+        } else {
+            serviceProvider.getMessageService().save(message);
+            return serviceProvider.getMessageService().findLastMessageInTable();
+        }
     }
 }
