@@ -1,5 +1,5 @@
 <template>
-    <div style="position:relative; width: 300px">
+    <v-layout align-space-around justify-start column>
         <message-form v-bind:messages="mes" v-bind:messageAttr="m1"/>
         <message-row v-for="m in mes"
                      v-bind:key="m.id"
@@ -7,7 +7,7 @@
                      v-bind:editMessage="editMethod"
                      v-bind:messages="mes"
                      v-bind:deleteMessage="deleteMethod" />
-    </div>
+    </v-layout>
 </template>
 
 <script>
@@ -26,6 +26,7 @@
                     m1: null
                 }
              },
+
         methods: {
               editMethod: function(message) {
                  this.m1 = message;

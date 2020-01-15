@@ -1,20 +1,30 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
-    <div>
+    <v-app>
 
-    <div v-if="!profile">Необходимо авторизоваться через
-        <a href="/login">Google</a>
-    </div>
-    <div v-else>
-       <div>
-            {{profile.name}} <a href="/logout">Выйти</a>
-       </div>
-        <messages-list v-bind:mes="messages" />
-    </div>
-    <div>
-        <some-q />
-    </div>
+        <v-app-bar app>
+            <v-toolbar-title>Vue</v-toolbar-title>
+            <v-spacer></v-spacer>
 
-    </div>
+            <span v-if="profile">{{profile.name}}</span>
+
+            <v-btn v-if="profile" icon href="/logout">
+                <v-icon>exit_to_app</v-icon>
+            </v-btn>
+
+            <v-btn v-if="!profile" href="/login">
+                Google
+            </v-btn>
+
+        </v-app-bar>
+        <v-content class="content">
+            <div v-if="profile">
+                <messages-list v-bind:mes="messages" />
+            </div>
+            <div>
+                <some-q />
+            </div>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
@@ -38,18 +48,24 @@
           created() {
             addHandler(data => {
                 let index = getIndex(this.messages, data.id);
-                if (data.text != 0 ) {
+
                     if (data.id <= lastIndexId(this.messages).id && data.id > 0) {
                         this.messages.splice(index, 1, data);
                     } else {
                         this.messages.push(data);
                     }
-                }
+
             })
           }
     }
 </script>
 
 <style>
+
+.content {
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
 
 </style>

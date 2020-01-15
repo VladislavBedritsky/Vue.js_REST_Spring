@@ -1,11 +1,17 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-    <div>
-    {{ message.id }}. {{ message.text }}
-    <span style="position: absolute; right: 0">
-            <input type="submit" value="Edit" v-on:click="edit" />
-            <input type="submit" value="X" v-on:click="del" />
-    </span>
-    </div>
+    <v-card class="my-2">
+        <v-card-text primary-tittle>
+            <i>{{ message.id }}.</i> {{ message.text }}
+        </v-card-text>
+        <v-card-actions>
+            <v-btn value="Edit" v-on:click="edit" small text rounded>Edit</v-btn>
+            <v-btn icon v-on:click="del" small>
+                <v-icon>
+                    delete
+                </v-icon>
+            </v-btn>
+        </v-card-actions>
+    </v-card>
 </template>
 
 <script>

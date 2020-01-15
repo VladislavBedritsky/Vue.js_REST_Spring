@@ -43,4 +43,9 @@ public class MessageServiceImpl implements MessageService {
     public Message findLastMessageInTable() {
         return daoProvider.getMessageDao().findLastMessageInTable();
     }
+
+    @Override
+    public List<Message> findAllSortedByTime() {
+        return daoProvider.getMessageDao().findAllSortedByTime();
+    }
 }

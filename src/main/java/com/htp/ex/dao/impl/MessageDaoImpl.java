@@ -57,4 +57,10 @@ public class MessageDaoImpl implements MessageDao {
         String sql = "SELECT * FROM messages ORDER BY id DESC LIMIT 1";
         return jdbcTemplate.queryForObject(sql, new MessageMapper());
     }
+
+    @Override
+    public List<Message> findAllSortedByTime() {
+        String sql = "SELECT * FROM messages ORDER BY date_time DESC";
+        return jdbcTemplate.query(sql, new MessageMapper());
+    }
 }

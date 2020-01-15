@@ -1,8 +1,15 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-    <div>
-        <input type="text" placeholder="vue" v-model="text" />
-        <input type="submit" value="Save" v-on:click="save" />
-    </div>
+    <v-layout>
+        <v-text-field
+                label="Vue"
+                v-model="text" counter="10"
+                required/>
+        <v-btn id="save_btn" value="Save"
+               v-on:click="save">
+            Save
+        </v-btn>
+
+    </v-layout>
 </template>
 
 <script>
@@ -83,5 +90,10 @@ id="before I integrated websocket"
 </script>
 
 <style>
+
+#save_btn {
+    margin-top: 10px;
+    margin-left: 10px;
+}
 
 </style>

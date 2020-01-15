@@ -18,4 +18,5 @@ public interface MessageService {
 
     Message findLastMessageInTable ();
 
+    List<Message> findAllSortedByTime();
 }

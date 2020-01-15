@@ -18,4 +18,6 @@ public interface MessageDao {
 
     Message findLastMessageInTable ();
 
+    List<Message> findAllSortedByTime();
+
 }
