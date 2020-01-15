@@ -18,7 +18,7 @@
         </v-app-bar>
         <v-content class="content">
             <div v-if="profile">
-                <messages-list v-bind:mes="messages" />
+                <messages-list v-bind:mes="sortedMessages" />
             </div>
             <div>
                 <some-q />
@@ -28,11 +28,11 @@
 </template>
 
 <script>
-    import MessagesList from 'components/components_App/messages/MessageList.vue'
-    import SomeQ from 'components/components_App/some/Some.vue'
+    import MessagesList from 'components/app/messages/MessageList.vue'
+    import SomeQ from 'components/app/some/Some.vue'
     import { addHandler } from 'util/websocket'
+
     import { getIndex } from 'util/collections'
-    import { lastIndexId } from 'util/collections'
 
     export default {
           components: {
@@ -45,15 +45,42 @@
               profile: frontendData.profile
             }
           },
+          computed: {
+            sortedMessages() {
+                return this.messages.sort((a,b) => -(a.id - b.id))
+            }
+          },
           created() {
             addHandler(data => {
-                let index = getIndex(this.messages, data.id);
+                if(data.objectType === 'MESSAGE') {
+                    const index = getIndex(this.sortedMessages, data.body.id);
 
-                    if (data.id <= lastIndexId(this.messages).id && data.id > 0) {
-                        this.messages.splice(index, 1, data);
-                    } else {
-                        this.messages.push(data);
+                    switch(data.eventType) {
+                        case 'CREATE':
+                            this.sortedMessages.push(data.body);
+                        case 'UPDATE':
+                           if (index > -1) {
+                                this.sortedMessages.splice(index, 1, data.body);
+                           }
+                            break;
+                        case 'REMOVE':
+                                this.sortedMessages.splice(index, 1);
+                            break;
+                        default:
+                            console.error(`Looks like the event type is unknown "${data.eventType}"`)
                     }
+
+/* read me.md
+                    if (index > -1) {
+                        this.sortedMessages.splice(index, 1, data);
+                    } else {
+                        this.sortedMessages.push(data);
+                    }
+*/
+
+                } else {
+                    console.error(`Looks like the object type is unknown "${data.objectType}"`)
+                }
 
             })
           }

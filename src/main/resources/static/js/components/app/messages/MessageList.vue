@@ -11,8 +11,9 @@
 </template>
 
 <script>
-    import MessageRow from 'components/components_App/messages/MessageRow.vue'
-    import MessageForm from 'components/components_App/messages/MessageForm.vue'
+    import MessageRow from 'components/app/messages/MessageRow.vue'
+    import MessageForm from 'components/app/messages/MessageForm.vue'
+    import messageApi from 'api/messages'
 
     export default {
         props: ['mes'],
@@ -26,13 +27,12 @@
                     m1: null
                 }
              },
-
         methods: {
               editMethod: function(message) {
                  this.m1 = message;
               },
               deleteMethod: function(message) {
-                   this.$resource('/message{/id}').remove({id: message.id}).then(result => {
+                   messageApi.remove(message.id).then(result => {
                       if ( result.ok ) {
                           this.mes.splice(this.mes.indexOf(message),1)
                       }
