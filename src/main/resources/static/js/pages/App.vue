@@ -39,11 +39,14 @@
                 MessagesList,
                 SomeQ
           },
+
           computed: {
             ...mapState(['profile']),
             ...mapGetters(['sortedMessages'])
           },
+
           methods: mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
+
           created() {
             addHandler(data => {
                 if(data.objectType === 'MESSAGE') {
@@ -52,23 +55,20 @@
 
                     switch(data.eventType) {
                         case 'CREATE':
+
                             this.addMessageMutation(data.body);
 
-                        /*    this.sortedMessages.push(data.body);  */
-                            break;
+                           break;
                         case 'UPDATE':
+
                            if (index > -1) {
-                                this.updateMessageMutation(data.body);
-
-                        /*        this.sortedMessages.splice(index, 1, data.body);  */
-
+                              this.updateMessageMutation(data.body);
                            }
-                            break;
-                        case 'REMOVE':
-                       /*         this.sortedMessages.splice(index, 1);
-                       */
 
-                                  this.removeMessageMutation(data.body);
+                           break;
+                        case 'REMOVE':
+
+                             this.removeMessageMutation(data.body);
 
                             break;
                         default:

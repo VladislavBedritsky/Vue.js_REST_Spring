@@ -17,11 +17,6 @@
     import { getIndex } from 'util/collections'
     import { mapActions  } from 'vuex'
 
-/*
-    import { sendMessage } from 'util/websocket'
-*/
-
-
     export default {
         props: ['messages', 'messageAttr'],
         data:
@@ -39,38 +34,20 @@
         },
         methods: {
           ...mapActions(['addMessageAction', 'updateMessageAction']),
+
           save: function () {
 
-/* read me.md
-                if (this.text != 0) {
-                    sendMessage({id: this.id, text: this.text});
-                    this.text="";
-                    this.id="";
-                }
-*/
             const index = getIndex(this.messages, this.id);
             const message = {id: this.id, text: this.text };
 
             if (this.text != 0) {
                 if (index > -1) {
 
-/*                   messageApi.update(message).then(result =>
-                     result.json().then(data => {
-                         this.messages.splice(index, 1, data);
-                    }))
-*/
-
-                        this.updateMessageAction(message);
+                   this.updateMessageAction(message);
 
                 } else {
-                   /* messageApi.add(message).then(result =>
-                        result.json().then(data => {
-                            this.messages.push(data);
-                                 this.text="";
-                        }))
-                   */
 
-                       this.addMessageAction(message);
+                   this.addMessageAction(message);
 
                 }
 
@@ -78,8 +55,7 @@
                 this.text="";
 
             }
-/*
-*/
+
         }
      }
     }

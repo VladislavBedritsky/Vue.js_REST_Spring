@@ -46,18 +46,6 @@ export default new Vuex.Store({
   actions: {
     addMessageAction({commit}, message) {
                     messageApi.add(message)
-                    .then(result =>
-                        result.json().then(data => {
-
-/*
-                            if (index > -1) {
-                                commit('updateMessageMutation', data, index)
-                            } else {
-                                commit('addMessageMutation', data)
-                            }
-*/
-
-                    }))
     },
     updateMessageAction({commit}, message) {
                     messageApi.update(message).then(result =>
@@ -68,7 +56,7 @@ export default new Vuex.Store({
                     }))
     },
     removeMessageAction({commit}, message) {
-                    messageApi.remove(message.id);
+                    messageApi.remove(message.id)
     }
   }
 })
