@@ -32,12 +32,9 @@
                  this.m1 = message;
               },
               deleteMethod: function(message) {
-                   messageApi.remove(message.id).then(result => {
-                      if ( result.ok ) {
-                          this.mes.splice(this.mes.indexOf(message),1)
-                      }
-                   })
+                   messageApi.remove(message.id);
               }
+
         }
     }
 </script>

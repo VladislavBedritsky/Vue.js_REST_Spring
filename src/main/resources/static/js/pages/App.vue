@@ -31,7 +31,6 @@
     import MessagesList from 'components/app/messages/MessageList.vue'
     import SomeQ from 'components/app/some/Some.vue'
     import { addHandler } from 'util/websocket'
-
     import { getIndex } from 'util/collections'
 
     export default {
@@ -53,7 +52,8 @@
           created() {
             addHandler(data => {
                 if(data.objectType === 'MESSAGE') {
-                    const index = getIndex(this.sortedMessages, data.body.id);
+
+                    const index = getIndex(this.messages, data.body.id);
 
                     switch(data.eventType) {
                         case 'CREATE':

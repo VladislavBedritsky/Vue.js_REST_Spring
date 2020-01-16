@@ -61,7 +61,7 @@
             } else {
                     messageApi.add(message).then(result =>
                         result.json().then(data => {
-                            this.messages.push(data);
+                        /*    this.messages.push(data);  */
                                  this.text="";
                         }))
             }

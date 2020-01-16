@@ -55,16 +55,16 @@ public class MessageController {
             @RequestBody Message message) {
 
         serviceProvider.getMessageService().update(message);
-
         webSocketSender.accept(EventType.UPDATE, message);
 
         return message;
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        serviceProvider.getMessageService().delete(id);
+    public void delete(
+            @PathVariable Integer id) {
         webSocketSender.accept(EventType.REMOVE, serviceProvider.getMessageService().findMessageById(id));
+        serviceProvider.getMessageService().delete(id);
     }
 
     // read me.md
