@@ -15,6 +15,7 @@
     import messageApi from 'api/messages'
     import { lastIndexId } from 'util/collections'
     import { getIndex } from 'util/collections'
+    import { mapActions  } from 'vuex'
 
 /*
     import { sendMessage } from 'util/websocket'
@@ -37,6 +38,7 @@
              }
         },
         methods: {
+          ...mapActions(['addMessageAction', 'updateMessageAction']),
           save: function () {
 
 /* read me.md
@@ -51,23 +53,31 @@
 
             if (this.text != 0) {
                 if (index > -1) {
-                    messageApi.update(message).then(result =>
-                    result.json().then(data => {
+
+/*                   messageApi.update(message).then(result =>
+                     result.json().then(data => {
                          this.messages.splice(index, 1, data);
-                                     this.text="";
-                                     this.id="";
-                }
-                ))
-            } else {
-                    messageApi.add(message).then(result =>
+                    }))
+*/
+
+                        this.updateMessageAction(message);
+
+                } else {
+                   /* messageApi.add(message).then(result =>
                         result.json().then(data => {
-                        /*    this.messages.push(data);  */
+                            this.messages.push(data);
                                  this.text="";
                         }))
+                   */
+
+                       this.addMessageAction(message);
+
+                }
+
+                this.id="";
+                this.text="";
+
             }
-
-
-         }
 /*
 */
         }

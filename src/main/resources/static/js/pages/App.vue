@@ -32,52 +32,48 @@
     import SomeQ from 'components/app/some/Some.vue'
     import { addHandler } from 'util/websocket'
     import { getIndex } from 'util/collections'
+    import { mapGetters, mapState, mapMutations  } from 'vuex'
 
     export default {
           components: {
                 MessagesList,
                 SomeQ
           },
-          data: function() {
-            return {
-              messages: frontendData.messages,
-              profile: frontendData.profile
-            }
-          },
           computed: {
-            sortedMessages() {
-                return this.messages.sort((a,b) => -(a.id - b.id))
-            }
+            ...mapState(['profile']),
+            ...mapGetters(['sortedMessages'])
           },
+          methods: mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
           created() {
             addHandler(data => {
                 if(data.objectType === 'MESSAGE') {
 
-                    const index = getIndex(this.messages, data.body.id);
+                    const index = getIndex(this.sortedMessages, data.body.id);
 
                     switch(data.eventType) {
                         case 'CREATE':
-                            this.sortedMessages.push(data.body);
+                            this.addMessageMutation(data.body);
+
+                        /*    this.sortedMessages.push(data.body);  */
+                            break;
                         case 'UPDATE':
                            if (index > -1) {
-                                this.sortedMessages.splice(index, 1, data.body);
+                                this.updateMessageMutation(data.body);
+
+                        /*        this.sortedMessages.splice(index, 1, data.body);  */
+
                            }
                             break;
                         case 'REMOVE':
-                                this.sortedMessages.splice(index, 1);
+                       /*         this.sortedMessages.splice(index, 1);
+                       */
+
+                                  this.removeMessageMutation(data.body);
+
                             break;
                         default:
                             console.error(`Looks like the event type is unknown "${data.eventType}"`)
                     }
-
-/* read me.md
-                    if (index > -1) {
-                        this.sortedMessages.splice(index, 1, data);
-                    } else {
-                        this.sortedMessages.push(data);
-                    }
-*/
-
                 } else {
                     console.error(`Looks like the object type is unknown "${data.objectType}"`)
                 }

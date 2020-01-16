@@ -14,6 +14,7 @@
     import MessageRow from 'components/app/messages/MessageRow.vue'
     import MessageForm from 'components/app/messages/MessageForm.vue'
     import messageApi from 'api/messages'
+    import { mapActions  } from 'vuex'
 
     export default {
         props: ['mes'],
@@ -28,11 +29,16 @@
                 }
              },
         methods: {
+              ...mapActions(['removeMessageAction']),
+
               editMethod: function(message) {
                  this.m1 = message;
               },
               deleteMethod: function(message) {
-                   messageApi.remove(message.id);
+/*                  messageApi.remove(message.id);   */
+
+                    this.removeMessageAction(message);
+
               }
 
         }

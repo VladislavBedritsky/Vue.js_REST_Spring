@@ -17,3 +17,6 @@ yarn add -D vue-style-loader css-loader
 
 ### vuetify dependency
 yarn add vuetify
+
+### vuex dependency
+yarn add vuex
