@@ -20,3 +20,6 @@ yarn add vuetify
 
 ### vuex dependency
 yarn add vuex
+
+### vue-router dependency
+yarn install vue-router

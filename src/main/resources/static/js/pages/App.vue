@@ -3,9 +3,22 @@
 
         <v-app-bar app>
             <v-toolbar-title>Vue</v-toolbar-title>
+
+            <v-btn class="ml-2" text
+                   v-if="profile"
+                   :disabled="$route.path === '/'"
+                   @click="showMessages">
+                Messages
+            </v-btn>
+
             <v-spacer></v-spacer>
 
-            <span v-if="profile">{{profile.name}}</span>
+            <v-btn text
+                   v-if="profile"
+                   v-bind:disabled="$route.path === '/profile'"
+                   v-on:click="showProfile" >
+                {{profile.name}}
+            </v-btn>
 
             <v-btn v-if="profile" icon href="/logout">
                 <v-icon>exit_to_app</v-icon>
@@ -16,36 +29,33 @@
             </v-btn>
 
         </v-app-bar>
-        <v-content class="content">
-            <div v-if="profile">
-                <messages-list v-bind:mes="sortedMessages" />
-            </div>
-            <div>
-                <some-q />
-            </div>
+        <v-content>
+            <router-view></router-view>
         </v-content>
     </v-app>
 </template>
 
 <script>
-    import MessagesList from 'components/app/messages/MessageList.vue'
-    import SomeQ from 'components/app/some/Some.vue'
     import { addHandler } from 'util/websocket'
     import { getIndex } from 'util/collections'
     import { mapGetters, mapState, mapMutations  } from 'vuex'
 
     export default {
-          components: {
-                MessagesList,
-                SomeQ
-          },
 
           computed: {
             ...mapState(['profile']),
             ...mapGetters(['sortedMessages'])
           },
 
-          methods: mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
+          methods: {
+            ...mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
+            showMessages() {
+                this.$router.push('/')
+            },
+            showProfile() {
+                this.$router.push('/profile')
+            }
+          },
 
           created() {
             addHandler(data => {
@@ -79,16 +89,16 @@
                 }
 
             })
+          },
+
+          beforeMount() {
+                if(!this.profile) {
+                    this.$router.replace('/auth')
+                }
           }
     }
 </script>
 
 <style>
-
-.content {
-    margin-top: 30px;
-    margin-left: 50px;
-    margin-right: 50px;
-}
 
 </style>
