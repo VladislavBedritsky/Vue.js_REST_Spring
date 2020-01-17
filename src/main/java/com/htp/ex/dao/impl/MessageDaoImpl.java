@@ -36,14 +36,20 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public void update(Message message) {
-        String sql = "UPDATE messages SET text =?, date_time =? where id = ?";
-        jdbcTemplate.update(sql,message.getText(), LocalDateTime.now(), message.getId());
+        String sql = "UPDATE messages SET text =?, date_time =?, " +
+                "link =?, link_title =?, link_description =?, link_cover =? " +
+                "where id = ?";
+        jdbcTemplate.update(sql,message.getText(), LocalDateTime.now(),
+                message.getLink(), message.getLinkTitle(), message.getLinkDescription(), message.getLinkCover(),
+                message.getId());
     }
 
     @Override
     public void save(Message message) {
-        String sql = "INSERT INTO messages (id, text, date_time) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, message.getId(), message.getText(), LocalDateTime.now());
+        String sql = "INSERT INTO messages (id, text, date_time, link, link_title, link_description, link_cover) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, message.getId(), message.getText(), LocalDateTime.now(),
+                message.getLink(), message.getLinkTitle(), message.getLinkDescription(), message.getLinkCover());
     }
 
     @Override

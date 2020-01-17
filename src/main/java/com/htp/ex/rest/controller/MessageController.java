@@ -10,6 +10,7 @@ import com.htp.ex.util.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -23,23 +24,24 @@ public class MessageController {
     @Autowired
     public MessageController (ServiceProvider serviceProvider, WebSocketSender webSocketSender) {
         this.serviceProvider = serviceProvider;
-        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.IdAndName.class);
+        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.IdAndText.class);
     }
 
     @GetMapping
-    @JsonView(Views.IdAndName.class)
+    @JsonView(Views.IdAndText.class)
     public List<Message> findAll () {
         return serviceProvider.getMessageService().findAll();
     }
 
     @GetMapping("/{id}")
-    @JsonView(Views.IdAndLocalDate.class)
+    @JsonView(Views.FullMessage.class)
     public Message getOne(@PathVariable Integer id) {
         return serviceProvider.getMessageService().findMessageById(id);
     }
 
     @PostMapping
-    public Message create (@RequestBody Message message) {
+    public Message create (@RequestBody Message message) throws IOException {
+        serviceProvider.getMetaDtoService().fillMeta(message);
 
         serviceProvider.getMessageService().save(message);
         Message updatedMessage = serviceProvider.getMessageService().findLastMessageInTable();
@@ -52,7 +54,9 @@ public class MessageController {
     @PutMapping("/{id}")
     public Message update (
             @PathVariable("id") Integer id,
-            @RequestBody Message message) {
+            @RequestBody Message message) throws IOException {
+
+        serviceProvider.getMetaDtoService().fillMeta(message);
 
         serviceProvider.getMessageService().update(message);
         webSocketSender.accept(EventType.UPDATE, message);
@@ -66,6 +70,7 @@ public class MessageController {
         webSocketSender.accept(EventType.REMOVE, serviceProvider.getMessageService().findMessageById(id));
         serviceProvider.getMessageService().delete(id);
     }
+
 
     // read me.md
 //    @MessageMapping("/changeMessage")

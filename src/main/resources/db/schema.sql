@@ -7,6 +7,10 @@ CREATE TABLE IF NOT EXISTS messages (
   id INT NOT NULL AUTO_INCREMENT,
   text VARCHAR(255),
   date_time DATETIME,
+  link varchar(255),
+  link_title varchar(255),
+  link_description varchar(255),
+  link_cover varchar(255),
   PRIMARY KEY (id)
 );
 

@@ -1,6 +1,7 @@
 package com.htp.ex.service;
 
 import com.htp.ex.service.impl.MessageServiceImpl;
+import com.htp.ex.service.impl.MetaDtoServiceImpl;
 import com.htp.ex.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,11 +15,18 @@ public class ServiceProvider {
     @Autowired
     private UserService userService = new UserServiceImpl();
 
+    @Autowired
+    private MetaDtoService metaDtoService = new MetaDtoServiceImpl();
+
     public MessageService getMessageService() {
         return messageService;
     }
 
     public UserService getUserService() {
         return userService;
+    }
+
+    public MetaDtoService getMetaDtoService() {
+        return metaDtoService;
     }
 }
