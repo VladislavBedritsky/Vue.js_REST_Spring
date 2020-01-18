@@ -20,4 +20,5 @@ public interface MessageDao {
 
     List<Message> findAllSortedByTime();
 
+    List<Message> findMesAndAuth();
 }

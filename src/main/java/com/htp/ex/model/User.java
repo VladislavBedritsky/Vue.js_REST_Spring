@@ -1,6 +1,8 @@
 package com.htp.ex.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.htp.ex.rest.json_view.Views;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -8,8 +10,11 @@ import java.util.Objects;
 
 public class User implements Serializable {
 
+    @JsonView(Views.IdAndText.class)
     private String id;
+    @JsonView(Views.IdAndText.class)
     private String name;
+    @JsonView(Views.IdAndText.class)
     private String userPic;
     private String email;
     private String gender;

@@ -19,6 +19,17 @@ public class MessageDaoImpl implements MessageDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    public List<Message> findMesAndAuth() {
+        String sql = "SELECT messages.id, messages.text, messages.date_time, " +
+                "messages.link, messages.link_title, messages.link_description, messages.link_cover, " +
+                "users.id AS mes_u_id, users.name AS mes_u_name, " +
+                "users.user_pic AS mes_u_user_pic, users.email AS mes_u_email, " +
+                "users.gender AS mes_u_gender, users.locale AS mes_u_locale, users.last_visit AS mes_u_last_visit " +
+                "FROM messages JOIN users ON messages.user_id = users.id";
+        return jdbcTemplate.query(sql, new MessageMapper());
+    }
+
+    @Override
     public List<Message> findAll() {
         String sql="SELECT * FROM messages";
         return jdbcTemplate.query(sql, new MessageMapper());

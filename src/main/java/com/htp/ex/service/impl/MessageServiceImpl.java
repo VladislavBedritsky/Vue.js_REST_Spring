@@ -48,4 +48,9 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> findAllSortedByTime() {
         return daoProvider.getMessageDao().findAllSortedByTime();
     }
+
+    @Override
+    public List<Message> findMesAndAuth() {
+        return daoProvider.getMessageDao().findMesAndAuth();
+    }
 }

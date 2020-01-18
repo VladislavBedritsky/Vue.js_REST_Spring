@@ -20,5 +20,5 @@ public interface MessageService {
 
     List<Message> findAllSortedByTime();
 
-
+    public List<Message> findMesAndAuth();
 }

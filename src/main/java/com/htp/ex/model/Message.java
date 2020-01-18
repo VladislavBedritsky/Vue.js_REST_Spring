@@ -30,6 +30,9 @@ public class Message {
     @JsonView(Views.FullMessage.class)
     private String linkCover;
 
+    @JsonView(Views.FullMessage.class)
+    private User author;
+
     public Integer getId() {
         return id;
     }
@@ -84,5 +87,13 @@ public class Message {
 
     public void setLinkCover(String linkCover) {
         this.linkCover = linkCover;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

@@ -9,4 +9,5 @@ public final class Views {
     public interface MessageWithoutText extends Id {}
 
     public interface FullMessage extends IdAndText {}
+
 }
