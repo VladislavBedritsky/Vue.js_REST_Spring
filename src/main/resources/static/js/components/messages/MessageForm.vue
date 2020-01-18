@@ -38,7 +38,7 @@
           save: function () {
 
             const index = getIndex(this.messages, this.id);
-            const message = {id: this.id, text: this.text };
+            const message = {id: this.id, text: this.text};
 
             if (this.text != 0) {
                 if (index > -1) {

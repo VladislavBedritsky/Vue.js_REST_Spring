@@ -24,7 +24,7 @@ public class MessageController {
     @Autowired
     public MessageController (ServiceProvider serviceProvider, WebSocketSender webSocketSender) {
         this.serviceProvider = serviceProvider;
-        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.IdAndText.class);
+        this.webSocketSender = webSocketSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
     }
 
     @GetMapping

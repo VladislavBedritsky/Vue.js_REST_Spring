@@ -6,5 +6,7 @@ public final class Views {
 
     public interface IdAndText extends Id {}
 
-    public interface FullMessage extends Id {}
+    public interface MessageWithoutText extends Id {}
+
+    public interface FullMessage extends IdAndText {}
 }

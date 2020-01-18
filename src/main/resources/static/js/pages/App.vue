@@ -49,6 +49,7 @@
 
           methods: {
             ...mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
+
             showMessages() {
                 this.$router.push('/')
             },
