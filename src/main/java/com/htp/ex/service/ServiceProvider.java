@@ -1,5 +1,6 @@
 package com.htp.ex.service;
 
+import com.htp.ex.service.impl.CommentServiceImpl;
 import com.htp.ex.service.impl.MessageServiceImpl;
 import com.htp.ex.service.impl.MetaDtoServiceImpl;
 import com.htp.ex.service.impl.UserServiceImpl;
@@ -18,6 +19,9 @@ public class ServiceProvider {
     @Autowired
     private MetaDtoService metaDtoService = new MetaDtoServiceImpl();
 
+    @Autowired
+    private CommentService commentService = new CommentServiceImpl();
+
     public MessageService getMessageService() {
         return messageService;
     }
@@ -28,5 +32,9 @@ public class ServiceProvider {
 
     public MetaDtoService getMetaDtoService() {
         return metaDtoService;
+    }
+
+    public CommentService getCommentService() {
+        return commentService;
     }
 }

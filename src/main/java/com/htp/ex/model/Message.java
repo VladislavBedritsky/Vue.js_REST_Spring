@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.htp.ex.rest.json_view.Views;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Message {
 
@@ -32,6 +33,9 @@ public class Message {
 
     @JsonView(Views.FullMessage.class)
     private User author;
+
+    @JsonView(Views.FullMessage.class)
+    private List<Comment> comments;
 
     public Integer getId() {
         return id;
@@ -95,5 +99,13 @@ public class Message {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

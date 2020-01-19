@@ -1,6 +1,7 @@
 package com.htp.ex.dao;
 
 import com.htp.ex.model.Message;
+import com.htp.ex.model.User;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface MessageDao {
 
     void update (Message message);
 
-    void save (Message message);
+    void save (Message message, User user);
 
     void delete (Integer id);
 

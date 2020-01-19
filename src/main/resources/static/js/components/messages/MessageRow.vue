@@ -14,16 +14,22 @@
                 </v-icon>
             </v-btn>
         </v-card-actions>
+        <comment-list
+                v-bind:comments="message.comments"
+                v-bind:messageId="message.id" >
+
+        </comment-list>
     </v-card>
 </template>
 
 <script>
    import { mapActions  } from 'vuex'
    import Media from 'components/media/Media.vue'
+   import CommentList from 'components/comments/CommentList.vue'
 
    export default {
     props: ['message', 'editMessage'],
-    components: { Media },
+    components: { Media, CommentList },
     methods: {
         ...mapActions(['removeMessageAction']),
         edit: function() {

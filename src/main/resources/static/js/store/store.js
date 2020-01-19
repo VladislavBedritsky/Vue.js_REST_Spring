@@ -2,13 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import messageApi from 'api/messages'
 import { getIndex } from 'util/collections'
+import commentApi from 'api/comments'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
 
   state: {
-    messages: frontendData.messages,
+    messages: messages,
     profile: frontendData.profile
   },
   getters: {
@@ -41,7 +42,25 @@ export default new Vuex.Store({
                 ...state.messages.slice(index + 1)
             ]
         }
-    }
+    },
+    addCommentMutation(state, comment) {
+
+        const index = getIndex(state.messages, comment.message.id);
+        const mes = state.messages[index];
+
+console.log(mes.comments)
+        state.messages = [
+            ...state.messages.slice(0, index),
+            {
+                ...mes,
+                comments: [
+                    ...mes.comments,
+                    comment
+                ]
+            },
+            ...state.messages.slice(index + 1)
+        ]
+    },
   },
   actions: {
     addMessageAction({commit}, message) {
@@ -57,6 +76,19 @@ export default new Vuex.Store({
     },
     removeMessageAction({commit}, message) {
                     messageApi.remove(message.id)
+    },
+    addCommentAction({commit, state}, comment) {
+
+        commentApi.add(comment).then(result =>
+        result.json().then(data => {
+            commit('addCommentMutation', comment)
+        }));
+
+
+ /*       const response = await commentApi.add(comment)
+        const data = await response.json()
+        commit('addCommentMutation', comment)
+*/
     }
   }
 })

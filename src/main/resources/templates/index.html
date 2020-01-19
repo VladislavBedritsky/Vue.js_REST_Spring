@@ -8,6 +8,7 @@
     <title>Vue</title>
     <script th:inline="javascript">
         var frontendData = [[ ${data} ]];
+        var messages = [# th:utext="${messages}" /];
     </script>
 </head>
 <body>

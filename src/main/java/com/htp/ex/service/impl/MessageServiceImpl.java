@@ -2,6 +2,7 @@ package com.htp.ex.service.impl;
 
 import com.htp.ex.dao.DaoProvider;
 import com.htp.ex.model.Message;
+import com.htp.ex.model.User;
 import com.htp.ex.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void save(Message message) {
-        daoProvider.getMessageDao().save(message);
+    public void save(Message message, User user) {
+        daoProvider.getMessageDao().save(message, user);
     }
 
     @Override
@@ -52,5 +53,15 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Message> findMesAndAuth() {
         return daoProvider.getMessageDao().findMesAndAuth();
+    }
+
+    @Override
+    public List<Message> getAllMessagesWithSetComments() {
+        List<Message> messages = findAll();
+        for(Message temp : messages) {
+            temp.setComments(daoProvider.getCommentDao().findCommentByMessageId(temp.getId()));
+        }
+
+        return messages;
     }
 }

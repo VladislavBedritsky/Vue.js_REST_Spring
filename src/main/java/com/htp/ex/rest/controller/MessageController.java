@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.htp.ex.dto.EventType;
 import com.htp.ex.dto.ObjectType;
 import com.htp.ex.model.Message;
+import com.htp.ex.model.User;
 import com.htp.ex.rest.json_view.Views;
 import com.htp.ex.service.ServiceProvider;
 import com.htp.ex.util.WebSocketSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -40,10 +42,12 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message create (@RequestBody Message message) throws IOException {
+    public Message create (
+            @RequestBody Message message,
+            @AuthenticationPrincipal User user) throws IOException {
         serviceProvider.getMetaDtoService().fillMeta(message);
 
-        serviceProvider.getMessageService().save(message);
+        serviceProvider.getMessageService().save(message, user);
         Message updatedMessage = serviceProvider.getMessageService().findLastMessageInTable();
 
         webSocketSender.accept(EventType.CREATE, updatedMessage);

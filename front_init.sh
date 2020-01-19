@@ -23,3 +23,6 @@ yarn add vuex
 
 ### vue-router dependency
 yarn install vue-router
+
+### @babel/polyfill
+yarn add @babel/polyfill

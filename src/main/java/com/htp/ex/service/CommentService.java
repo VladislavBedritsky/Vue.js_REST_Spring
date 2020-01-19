@@ -1,13 +1,11 @@
-package com.htp.ex.dao;
+package com.htp.ex.service;
 
 import com.htp.ex.model.Comment;
 import com.htp.ex.model.User;
 
 import java.util.List;
 
-public interface CommentDao {
-
-    List<Comment> findAll ();
+public interface CommentService {
 
     void save(Comment comment, User user);
 

@@ -3,7 +3,7 @@
         <v-text-field
                 label="Vue"
                 v-model="text"
-                required />
+                v-on:keyup.enter="save" />
         <v-btn id="save_btn" value="Save"
                v-on:click="save">
             Save
